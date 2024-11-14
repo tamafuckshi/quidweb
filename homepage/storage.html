@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>QuID - ID Storage</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0; 
+        }
+
+        body {
+            font-family: 'Poppins';
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+        }
+
+        nav {
+        position: relative;
+        width: 100%;
+        height: 80px;
+        background: #263A69;
+        border-radius: 0 0 8px 8px;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+        margin-bottom: 60px;
+        }
+
+        nav a {
+          font-size: 15px;
+          color: white;
+          text-transform: uppercase;
+          text-decoration: none;
+          line-height: 50px;
+          padding: 0 15px;
+          transition: color 0.3s ease;
+          margin-left: 67px;
+        }
+
+        nav a:hover {
+          color: #F1F1F1;
+        }
+
+        .profile-pic {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        vertical-align: middle;
+        border: 1px solid;
+        padding: 3px;
+      }
+
+        .dropdown {
+          position: relative;
+          margin-right: 70px;
+        }
+
+        .dropdown-content {
+            display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          background-color: #F1F1F1;
+          border-radius: 8px;
+          box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+          width: 200px;
+        }
+
+        .dropdown:hover .dropdown-content {
+          display: block;
+        }
+
+        .dropdown-content a {
+          font-size: 14px;
+          padding: 0;
+          display: block;
+          color: black;
+          margin: 10px;
+          padding-left: 10px;
+        }
+
+        .dropdown-content a i {
+          margin-right: 8px;
+        }
+
+        .dropdown-content a:hover {
+          background: #263A69;
+          border-radius: 8px;
+          color: #F1F1F1;
+        }
+
+        main {
+            display: flex;
+            gap: 15px;
+            align-items: flex-start;
+            max-width: 1200px; 
+            width: 100%; 
+            padding: 2rem;
+            margin: 0 auto;
+
+        }
+
+        .form-section, .display-section {
+            flex: 1;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            height: 850px;
+        }
+
+        .display-section {
+            max-width: 100%;  
+            overflow-x: auto; 
+            white-space: nowrap; 
+            padding: 1rem; 
+        }
+
+        .form-section {
+            max-width: 100%;  
+            overflow-y: auto; 
+            white-space: nowrap; 
+            padding: 1rem; 
+        }
+
+        h2 {
+            color: #263A69;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-top: 1rem;
+            color: #333;
+        }
+
+        input[type="text"], input[type="file"], select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            margin-top: 1.5rem;
+            padding: 0.7rem 1.5rem;
+            background-color: #263A69;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0a9396;
+        }
+
+        #idList {
+            margin-top: 1rem;
+        }
+
+        .id-item {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border: 1px solid white;
+            border-radius: 4px;
+            background-color: #e0e0e0;
+            display: inline-block; 
+            margin-right: 1rem; 
+            width: 100%; 
+            vertical-align: top;
+        }
+
+        #noIdMessage{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30vh;
+            color: #D3D3D3;
+        }
+
+        #noIdMessage i{
+            font-size: 65px;
+
+        }
+
+        .img-area {
+            position: relative;
+            height: 185px;
+            width: 310px;
+            background: #f2f2f2;
+            margin: 13px auto 30px; 
+            border-radius: 30px; 
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .img-area:hover {
+            background: #e0e0e0;
+        }
+
+        .img-area i {
+            font-size: 40px;
+        }
+        .img-area h3 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 6px;
+        }
+        .img-area p {
+            color: #999;
+            font-size: 11px;
+            text-align: center;
+        }
+        .img-area p span {
+            font-weight: 600;
+        }
+        .img-area img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            z-index: 100;
+        }
+        
+        .img-area::before {
+            content: attr(data-img);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, .5);
+            color: #fff;
+            font-weight: 500;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: all .3s ease;
+            z-index: 200;
+        }
+
+        footer {
+            box-shadow: 0px -4px 8px rgba(0, 0, 0, 0.1);
+            margin-top:100px ;
+            padding: 0;
+            margin-bottom: 0px;
+        }
+
+        .footer-container {
+            background: #DCDCDA;
+            padding-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: black;
+            text-decoration: none;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .footer-heading {
+          color: black;
+          font-size: 28px;
+          margin-bottom: 10px;
+          text-align: center;
+        }
+
+        .footer-content p {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 10px;
+            padding-left: 30px;
+        }
+
+        .footer-content p i {
+            margin-right: 15px;
+        }
+
+        .footer-content ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-list {
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-list li {
+            width: auto;
+            text-align: center;
+            list-style-type: none;
+            padding: 7px; 
+            margin: 0;
+        }
+
+        .social-icons {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-icons li {
+            display: inline-block;
+            text-align: center;
+            padding: 5px;
+            margin: 0;
+        }
+
+        .social-icons i {
+            font-size: 25px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+        }
+
+        .fab.fa-facebook {
+            color: #3b5998; 
+        }
+
+        .fab.fa-twitter {
+            color: #1da1f2; 
+        }
+
+        .fab.fa-instagram {
+            color: #bc2a8d; 
+        }
+
+        .fab.fa-linkedin {
+            color: #0077b5; 
+        }
+
+        .footer-bottom-bar {
+          background: #263A69;
+          text-align: center;
+          padding: 10px 0;
+          margin-top: 10px;
+        }
+
+        .footer-bottom-bar p {
+        color: white;
+        margin: 0;
+        font-size: 16px;
+        padding: 7px;
+        }
+
+        .footer-content a {
+        color: #006769;
+        text-decoration: none;
+        }
+
+        @media screen and (min-width: 768px) {
+            .footer-content {
+                width: calc(33.3% - 40px);
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+            <a href="homepage.html#homepage">Home</a>
+            <a href="storage.html">Digital IDs</a>
+            <a href="homepage.html#dashboard">Dashboard</a>
+              <div class="dropdown">
+                <a href="">
+                    <img src="images/user.jpg" alt="Profile Picture" class="profile-pic">
+                    Profile
+                </a>
+                  <div class="dropdown-content">
+                    <a href="profile.html"><i class="fa-solid fa-gear"></i>Account Settings</a>
+                    <a href="#logout" id="logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+                  </div>
+              </div>
+        </nav>
+        
+    <main>
+        <section class="form-section">
+            <h2>Store Your ID</h2>
+            <hr width="40%" color="#838DB1" size="3">
+            <form id="idForm">
+                <label for="idType">ID Type:</label>
+                <select id="idType" name="idType" required>
+                    <option value="" disabled selected>Select ID Type</option>
+                    <option value="Student ID">Student ID</option>
+                    <option value="National ID">National ID</option>
+                    <option value="Passport">Passport</option>
+                    <option value="Employee ID">Employee ID</option>
+                </select>
+
+                <label for="idNumber">ID Number:</label>
+                <input type="text" id="idNumber" name="idNumber" placeholder="Enter ID Number" required>
+
+                <label for="frontIdImage">Upload Front ID Image:</label>
+                <input type="file" id="frontIdImage" name="frontIdImage" accept="image/*" required style="display: none;">
+                <div class="img-area select-image-front" data-img="">
+                    <i class="fa-solid fa-plus"></i>
+                    <h3>Add Front ID</h3>
+                </div>
+
+                <label for="backIdImage">Upload Back ID Image:</label>
+                <input type="file" id="backIdImage" name="backIdImage" accept="image/*" required style="display: none;">
+                <div class="img-area select-image-back" data-img="">
+                    <i class="fa-solid fa-plus"></i>
+                    <h3>Add Back ID</h3>
+                </div>
+
+                <button type="submit">Save ID</button>
+            </form>
+        </section>
+
+        <section class="display-section">
+            <h2>Stored IDs</h2>
+            <hr width="40%" color="#838DB1" size="3">
+            <div id="noIdMessage">
+                <i class="fa-solid fa-file"></i><br>
+                <p>Your uploaded ID will appear here.</p>
+            </div>
+            <div id="idList"></div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-container">
+          <div class="footer-content-wrapper">
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>Contact Us</b></h3>
+              <p>
+                <i class="fas fa-envelope"></i
+                ><a href="mailto:quid2024@gmail.com">quid2024@gmail.com</a>
+              </p>
+              <p>
+                <i class="fas fa-phone"></i
+                ><a href="+63 (2) 123-4567">+63 (2) 123-4567</a>
+              </p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i
+                ><a href="#">567 Street, Manila, Philippines</a>
+              </p>
+            </div>
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>What is QuID?</b></h3>
+              <ul class="footer-list">
+                <li style="color: #006769;">
+                  Your go to digital wallet extention.</li>
+                <li style="color: #006769;">
+                  QuId provides ease of access to your IDs with just one QR code.</li>
+                <li style="color: #006769;">
+                  A convenient web application to carry all your IDs.
+                </li>
+              </ul>
+            </div>
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>Follow Us</b></h3>
+              <ul class="social-icons">
+                <li>
+                  <a
+                    href="https://web.facebook.com/profile.php?id=61559189196062"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-facebook"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/login"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-twitter"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/accounts/login/?hl=en"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/login"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-linkedin"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <div class="footer-bottom-bar">
+            <p>&copy; 2024 QuID . All rights reserved</p>
+          </div>
+        </div>
+    </footer>
+
+    <script>
+        const frontSelectImage = document.querySelector('.select-image-front');
+        const backSelectImage = document.querySelector('.select-image-back');
+        const frontInputFile = document.querySelector('#frontIdImage');
+        const backInputFile = document.querySelector('#backIdImage');
+        const frontImgArea = document.querySelector('.select-image-front');
+        const backImgArea = document.querySelector('.select-image-back');
+
+        // Trigger file input when img-area is clicked
+        frontSelectImage.addEventListener('click', function () {
+            frontInputFile.click();
+        });
+
+       frontInputFile.addEventListener('change', function () {
+            const image = this.files[0];
+            if (image && image.size < 2000000) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    frontImgArea.innerHTML = ''; // Clear previous content
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    frontImgArea.appendChild(img);
+                    frontImgArea.classList.add('active');
+                    frontImgArea.dataset.img = image.name;
+                };
+                reader.readAsDataURL(image);
+            } else {
+                alert("Front ID image size must be less than 2MB.");
+            }
+        });
+
+        // Back ID image click to upload
+        backSelectImage.addEventListener('click', function () {
+            backInputFile.click();
+        });
+
+        backInputFile.addEventListener('change', function () {
+            const image = this.files[0];
+            if (image && image.size < 2000000) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    backImgArea.innerHTML = ''; // Clear previous content
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    backImgArea.appendChild(img);
+                    backImgArea.classList.add('active');
+                    backImgArea.dataset.img = image.name;
+                };
+                reader.readAsDataURL(image);
+            } else {
+                alert("Back ID image size must be less than 2MB.");
+            }
+        });
+
+        // Save ID and add details to the display section
+        document.getElementById('idForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const idType = document.getElementById('idType').value;
+            const idNumber = document.getElementById('idNumber').value;
+            const frontIdImage = document.getElementById('frontIdImage').files[0];
+            const backIdImage = document.getElementById('backIdImage').files[0];
+            
+            if (!idType || !idNumber || !frontIdImage || !backIdImage) {
+                alert("Please fill out all fields.");
+                return;
+            }
+
+            // Load both images before displaying
+            const frontReader = new FileReader();
+            const backReader = new FileReader();
+
+            frontReader.onload = function(e) {
+                const frontImageSrc = e.target.result;
+
+                backReader.onload = function(e) {
+                    const backImageSrc = e.target.result;
+                    displayID(idType, idNumber, frontImageSrc, backImageSrc);
+                };
+
+                backReader.readAsDataURL(backIdImage);
+            };
+
+            frontReader.readAsDataURL(frontIdImage);
+
+            document.getElementById('idForm').reset();
+
+            // Clear previews
+            document.querySelectorAll('.img-area').forEach(imgArea => {
+                imgArea.classList.remove('active');
+                imgArea.querySelectorAll('img').forEach(img => img.remove());
+            });
+        });
+
+
+        function displayID(type, number, frontImageSrc, backImageSrc) {
+        // Hide the "No uploaded ID" message
+        const noIdMessage = document.getElementById('noIdMessage');
+        noIdMessage.style.display = 'none';
+
+        const idList = document.getElementById('idList');
+        const idItem = document.createElement('div');
+        idItem.classList.add('id-item');
+
+        idItem.innerHTML = `
+            <p><strong>ID Type:</strong> ${type}</p>
+            <p><strong>ID Number:</strong> ${number}</p>
+            <p><strong>Front ID Image:</strong></p>
+            <img src="${frontImageSrc}" alt="${type} Front Image" style="max-width: 100%; height: auto; margin-top: 1rem;">
+            <p><strong>Back ID Image:</strong></p>
+            <img src="${backImageSrc}" alt="${type} Back Image" style="max-width: 100%; height: auto; margin-top: 1rem;">
+        `;
+        
+        idList.appendChild(idItem);
+    }
+
+        const logoutTab = document.querySelector('#logout');
+        if (logoutTab) {
+            logoutTab.addEventListener('click', function (e) {
+                e.preventDefault(); // Prevent the default anchor link behavior
+                if (confirm('Are you sure you want to log out?')) {
+                    window.location.href = 'User-Login.html'; // Redirect to the login page
+                }
+            });
+        }
+    </script>
+</body>
+</html>

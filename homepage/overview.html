@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <title></title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins';
+            text-transform: uppercase;
+        }
+
+        body {
+            background: linear-gradient(to right, #e2e2e2, #c9d6ff);
+            font-family: 'Poppins';
+        }
+
+        nav {
+            position: relative;
+            width: 100%;
+            height: 80px;
+            background: #263A69;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        nav a {
+            font-size: 15px;
+            color: white;
+            text-transform: uppercase;
+            text-decoration: none;
+            line-height: 50px;
+            padding: 0 15px;
+            transition: color 0.3s ease;
+            margin-left: 67px;
+        }
+
+        nav a:hover {
+            color: #F1F1F1;
+        }
+
+        nav .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 1px solid;
+            padding: 3px;
+            margin-bottom: 0;
+      }
+
+        .profile-pic {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            vertical-align: middle;
+            border: 1px solid;
+            padding: 3px;
+      }
+
+        .dropdown {
+            position: relative;
+            margin-right: 70px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #F1F1F1;
+            border-radius: 8px;
+            box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+            width: 200px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            font-size: 14px;
+            padding: 0;
+            display: block;
+            color: black;
+            margin: 10px;
+            padding-left: 10px;
+        }
+
+        .dropdown-content a i {
+            margin-right: 8px;
+        }
+
+        .dropdown-content a:hover {
+            background: #263A69;
+            border-radius: 8px;
+            color: #F1F1F1;
+        }
+        .container{
+            background: white;
+            display: flex;
+            max-width: 57%;
+            height: 70%;
+            margin: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow-y: auto; /* Enable vertical scrolling */
+        }
+
+        .container h2 {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .side-profile {
+            background: ;
+            width: 340px; 
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
+            justify-content: flex-start; /* Aligns items to the top */
+            text-align: center; 
+            padding-top: 20px; /* Optional: add padding to create space at the top */
+        }
+
+        .side-profile button{
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .side-profile button:hover{
+            color: #838DB1;
+            text-decoration: underline;
+        }
+
+        .side-profile i {
+            padding-right: 7px;
+        }
+
+        .profile-pic {
+            height: 200px;
+            width: 200px;
+            border-radius: 50%;
+            border: 2px solid grey;
+            margin-bottom: 15px;
+        }
+
+        .digital-ids {
+            height: 30%;
+            width: 100%;
+            margin: 50px 0 50px 0;
+            border-radius: 8px;
+        }
+
+        .title {
+            margin-bottom: 20px;
+        }
+
+        .activity-log {
+		    width: 100%;
+		    margin-bottom: 30px;
+		}
+
+		.activity-table {
+		    width: 100%;
+		    border-collapse: collapse;
+		    margin-top: 10px;
+		    font-size: 16px;
+		}
+
+		.activity-table th, .activity-table td {
+		    padding: 12px 15px;
+		    text-align: left;
+		    border-bottom: 1px solid #ddd;
+		}
+
+		.activity-table th {
+		    background-color: #f1f1f1;
+		    font-weight: bold;
+		    color: #333;
+		}
+
+		.activity-table tr:nth-child(even) {
+		    background-color: #f9f9f9;
+		}
+
+		.activity-table tr:hover {
+		    background-color: #f1f1f1;
+		}
+
+        .id-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .id-item {
+            flex: 1 1 45%;
+            display: flex;
+            align-items: center;
+            margin:0 20px 25px 0;
+        }
+
+        .id-thumb {
+            display: block;
+            width: 110px;
+            height: 80px;
+            margin-right: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-info {
+            width: 600px; 
+            margin-top: 50px;
+            height: 700px;
+            box-sizing: border-box; 
+            padding: 20px; 
+        }
+
+        .profile-header {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 20px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        input {
+            background: #ddd;
+            padding: 8px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .upload-btn {
+            background-color: #263A69;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.2s;
+            text-decoration: none;
+        }
+
+        .upload-btn:hover{
+            background-color: #1d2c4e;
+        }
+
+        .container-bottom {
+            height: 12px;
+            width: 100%;
+        }
+
+        footer {
+            margin-top:100px ;
+            padding: 0;
+            margin-bottom: 0px; 
+        }
+
+        .footer-container {
+            background: #DCDCDA;
+            padding-top: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            color: black;
+            text-decoration: none;
+            position: relative;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer-content-wrapper {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .footer-content {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 0;
+            text-align: center;
+        }
+
+        .footer-heading {
+            color: black;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .footer-content p {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            width: 100%;
+            margin-bottom: 10px;
+            padding-left: 30px;
+        }
+
+        .footer-content p i {
+            margin-right: 15px;
+        }
+
+        .footer-content ul {
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .footer-list {
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-list li {
+            width: auto;
+            text-align: center;
+            list-style-type: none;
+            padding: 7px; 
+            margin: 0;
+        }
+
+        .social-icons {
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .social-icons li {
+            display: inline-block;
+            text-align: center;
+            padding: 5px;
+            margin: 0;
+        }
+
+        .social-icons i {
+            font-size: 25px;
+        }
+
+        .social-icons a {
+            text-decoration: none;
+        }
+
+        .fab.fa-facebook {
+            color: #3b5998; 
+        }
+
+        .fab.fa-twitter {
+            color: #1da1f2; 
+        }
+
+        .fab.fa-instagram {
+            color: #bc2a8d; 
+        }
+
+        .fab.fa-linkedin {
+            color: #0077b5; 
+        }
+
+        .footer-bottom-bar {
+            background: #263A69;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: 10px;
+        }
+
+        .footer-bottom-bar p {
+            color: white;
+            margin: 0;
+            font-size: 16px;
+            padding: 7px;
+        }
+
+        .footer-content a {
+            color: #006769;
+            text-decoration: none;
+        }
+
+        @media screen and (min-width: 768px) {
+            .footer-content {
+                width: calc(33.3% - 40px);
+                margin-bottom: 0;
+            }
+        }
+    </style>
+</head>
+<body> <!-- Lahat ng andito (inputs, images etc), placeholder lang lahat para alam nyo kung papaano yung layout nya :) -->
+    <nav>
+        <a href="#homepage">Home</a>
+        <a href="#government-ids">Government IDs</a>
+        <a href="#personal-ids">Personal IDs</a>
+          <div class="dropdown">
+            <a href="#profile">
+                <img src="user.jpg" alt="Profile Picture" class="profile-pic">
+                Profile
+            </a>
+              <div class="dropdown-content">
+                <a href="#dashboard"><i class="fa-solid fa-chart-line"></i>Dashboard</a>
+                <a href="#User-Profile"><i class="fa-solid fa-gear"></i>Account Settings</a>
+                <a href="#logout"><i class="fa-solid fa-right-from-bracket"></i>Logout</a>
+              </div>
+          </div>
+    </nav>
+
+    <div class="container">
+        <div class="side-profile">
+            <img src="user.jpg" alt="Profile Picture" class="profile-pic">
+            <h2>John Doe</h2>
+            <a href="User-Profile.html">
+                <button><i class="fa-solid fa-pen-to-square"></i>Edit</button>
+            </a>
+        </div>
+        <div class="profile-info">
+            <h2>My Profile</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" value="John" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" value="Doe" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="text" value="555-237-2384" readonly>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" value="JohnDoe@gmial.com" readonly>
+                </div>
+            </div>
+            
+            <div class="digital-ids">
+                <div class="title">
+                    <h3>Your Digital IDs</h3>
+                    <hr width="29%" color="#838DB1" size="3">
+                </div>
+                <div class="id-list">
+                    <div class="id-item"> 
+                        <img src="placeholder-license.jpg" alt="ID Thumbnail" class="id-thumb">
+                        <p>Driver's License <br> Uploaded on 2024-10-01</p>
+                    </div>
+                    <div class="id-item"> 
+                        <img src="placeholder-passport.png" alt="ID Thumbnail" class="id-thumb">
+                        <p>Passport <br> Uploaded on 2024-09-15</p>
+                    </div>
+                </div>
+                <a href="User-Storage.html" class="upload-btn">Upload New ID</a>
+            </div>
+
+            <div class="activity-log">
+                <div class="title">
+                    <h3>Recent Activities</h3>
+                    <hr width="31%" color="#838DB1" size="3">
+                </div>
+                <table class="activity-table">
+		        <thead>
+		            <tr>
+		                <th>Date & Time</th>
+		                <th>Activity</th>
+		            </tr>
+		        </thead>
+		        <tbody>
+		            <tr>
+		                <td>2024-10-29 14:05</td>
+		                <td>Uploaded a new ID</td>
+		            </tr>
+		            <tr>
+		                <td>2024-10-15 09:30</td>
+		                <td>Changed password</td>
+		            </tr>
+		            <tr>
+		                <td>2024-09-25 16:45</td>
+		                <td>Updated email address</td>
+		            </tr>
+		        </tbody>
+		    </table>
+            </div>
+
+            <div class="container-bottom"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+          <div class="footer-content-wrapper">
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>Contact Us</b></h3>
+              <p>
+                <i class="fas fa-envelope"></i
+                ><a href="mailto:quid2024@gmail.com">quid2024@gmail.com</a>
+              </p>
+              <p>
+                <i class="fas fa-phone"></i
+                ><a href="+63 (2) 123-4567">+63 (2) 123-4567</a>
+              </p>
+              <p>
+                <i class="fas fa-map-marker-alt"></i
+                ><a href="#">567 Street, Manila, Philippines</a>
+              </p>
+            </div>
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>What is QuID?</b></h3>
+              <ul class="footer-list">
+                <li style="color: #006769;">
+                  Your go to digital wallet extention.</li>
+                <li style="color: #006769;">
+                  QuId provides ease of access to your IDs with just one QR code.</li>
+                <li style="color: #006769;">
+                  A convenient web application to carry all your IDs.
+                </li>
+              </ul>
+            </div>
+            <div class="footer-content">
+              <h3 class="footer-heading"><b>Follow Us</b></h3>
+              <ul class="social-icons">
+                <li>
+                  <a
+                    href="https://web.facebook.com/profile.php?id=61559189196062"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-facebook"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://twitter.com/login"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-twitter"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.instagram.com/accounts/login/?hl=en"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-instagram"></i
+                  ></a>
+                </li>
+                <li>
+                  <a
+                    href="https://www.linkedin.com/login"
+                    target="_blank"
+                    rel="noreferrer"
+                    ><i class="fab fa-linkedin"></i
+                  ></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <div class="footer-bottom-bar">
+            <p>&copy; 2024 QuID . All rights reserved</p>
+          </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>
