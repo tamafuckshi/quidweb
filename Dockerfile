@@ -8,10 +8,7 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Copy the content of the current directory to the container's /var/www/html
-COPY ./public /var/www/html
-COPY ./assets /var/www/assets
-COPY ./config /var/www/config
-COPY ./homepage /var/www/homepage
+COPY . /var/www/html/
 
 # Expose port 80 for web traffic
 EXPOSE 80

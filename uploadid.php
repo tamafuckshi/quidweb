@@ -1,5 +1,5 @@
 <?php
-include '../config/dbconn.php';
+include 'dbconn.php';
 session_start();
 
 // Gather and validate form data

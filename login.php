@@ -1,7 +1,6 @@
 <?php
 session_start();
-require_once 'config/dbconn.php'; // Assuming you have a database connection setup here
-
+require_once 'dbconn.php'; 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $password = $_POST['password'];

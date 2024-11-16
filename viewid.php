@@ -1,5 +1,5 @@
 <?php
-require 'config/dbconn.php';
+require 'dbconn.php';
 
 $userId = $_GET['id'];
 $idType = $_GET['type'];
