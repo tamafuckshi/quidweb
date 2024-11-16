@@ -14,21 +14,6 @@ try {
 }
 ?>
 
-
-//query
-try {
-    $query = "Select * from users";
-    $stmt = $pdo->$query($query);
-
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    foreach ($users as $user) {
-        echo "ID: {$user['id']} | Username: {$user['username']} | Email: {$user['email']}<br>";
-    }
-} catch (PDOException $e) {
-    echo "Error fetching users: ". $e-> getMessage();
-}
-?>
-    
+ 
 
 
