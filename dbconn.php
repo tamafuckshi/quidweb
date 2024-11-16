@@ -1,19 +1,13 @@
-<?php
-// Database connection settings
-$host = 'localhost';
-$dbname = 'quidDB';
-$username = 'root';
-$password = '';
 
+<?php
+// dbconn.php - No extra spaces or lines before or after the PHP tags
 try {
-    $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    echo "Connected successfully!";
+    $pdo = new PDO("mysql:host=localhost;dbname=testdb", "username", "password");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
 ?>
 
- 
 
 
