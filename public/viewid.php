@@ -1,16 +1,19 @@
 <?php
-include '../config/database.php';
+require 'config/dbconnection.php';
 
-$id = base64_decode($_GET['id']);
-$query = $conn->prepare("SELECT * FROM UserValidID WHERE UserID = ?");
-$query->execute([$id]);
-$idData = $query->fetch(PDO::FETCH_ASSOC);
+$userId = $_GET['id'];
+$idType = $_GET['type'];
 
-if ($idData) {
-    echo "ID Type: " . htmlspecialchars($idData['ValidIDType']);
-    echo "ID Number: " . htmlspecialchars($idData['IDNumber']);
-    echo '<img src="data:image/jpeg;base64,' . base64_encode($idData['FrontIDImage']) . '" />';
-    echo '<img src="data:image/jpeg;base64,' . base64_encode($idData['BackIDImage']) . '" />';
+$query = "SELECT * FROM UserValidID WHERE UserID = ? AND ValidIDType = ?";
+$stmt = $pdo->prepare($query);
+$stmt->execute([$userId, $idType]);
+$idDetails = $stmt->fetch();
+
+if ($idDetails) {
+    echo "<h1>ID Details</h1>";
+    echo "<p>ID Number: " . htmlspecialchars($idDetails['IDNumber']) . "</p>";
+    echo '<img src="data:image/png;base64,' . base64_encode($idDetails['FrontIDImage']) . '" alt="Front ID">';
+    echo '<img src="data:image/png;base64,' . base64_encode($idDetails['BackIDImage']) . '" alt="Back ID">';
 } else {
     echo "Invalid ID.";
 }
