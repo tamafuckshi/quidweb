@@ -1,4 +1,3 @@
-
 <?php
 // dbconn.php - No extra spaces or lines before or after the PHP tags
 try {
