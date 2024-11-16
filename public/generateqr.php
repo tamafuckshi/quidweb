@@ -1,5 +1,5 @@
 <?php
-include '../config/dbconnection..php';
+include '../config/dbconn..php';
 require '../assets/phpqrcode/qrlib.php';
 
 $link = urldecode($_GET['link']);

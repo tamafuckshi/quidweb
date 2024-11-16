@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../config/dbconnection.php';
+require_once '../config/dbconn.php';
 
 // Ensure the user is logged in
 if (!isset($_SESSION['user_id'])) {
