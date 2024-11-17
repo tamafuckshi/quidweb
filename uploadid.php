@@ -28,10 +28,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ':qrLink' => $qrLink
     ]);
 
-    // Generate QR Code and save it
-    $qrCodePath = "uploads/qrcodes/$uniqueID.png";
-    QRcode::png($qrLink, $qrCodePath, QR_ECLEVEL_L, 5);
-
+    $qrCodePath = "uploads/qrcodes/$uniqueID.png"; // Path where QR code will be saved
+    QRcode::png($uniqueLink, $qrCodePath, QR_ECLEVEL_L, 5); // Generate QR code and save it
+    
     echo "ID uploaded and QR code generated successfully.";
 }
 ?>
