@@ -1,5 +1,4 @@
-<?php
-// dbconn.php - No extra spaces or lines before or after the PHP tags
+<?php   
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=quidDB", "root", "");
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
