@@ -1,19 +1,20 @@
 <?php
-include 'dbconn..php';
-require '../assets/phpqrcode/qrlib.php';
+require 'dbconn.php';
+require 'assets/phpqrcode/phpqrlib.php';
 
-$link = urldecode($_GET['link']);
-$userID = $_SESSION['UserID'];
+if (isset($_GET['id'])) {
+    $uniqueID = $_GET['id'];
 
-// Define QR Code path
-$qrCodePath = '../uploads/qrcodes/' . md5($link) . '.png';
-QRcode::png($link, $qrCodePath);
+    $query = "SELECT QRCodeLink FROM UserValidID WHERE UniqueID = :uniqueID";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([':uniqueID' => $uniqueID]);
 
-// Optionally store in the QRCodeLog table
-$query = $conn->prepare("INSERT INTO QRCodeLog (UserID, Action) VALUES (?, 'Generated')");
-$query->execute([$userID]);
+    $qrData = $stmt->fetch(PDO::FETCH_ASSOC);
 
-// Redirect to view QR or display success
-header("Location: viewid.php?id=" . urlencode(base64_decode($_GET['link'])));
-exit;
+    if ($qrData) {
+        QRcode::png($qrData['QRCodeLink'], false, QR_ECLEVEL_L, 5);
+    } else {
+        echo "No QR code found.";
+    }
+}
 ?>

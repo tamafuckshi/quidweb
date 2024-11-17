@@ -1,23 +1,36 @@
 <?php
-include 'dbconn.php';
-session_start();
+require 'dbconn.php';
+require 'assets/phpqrcode/phpqrlib.php';
 
-// Gather and validate form data
-$userID = $_SESSION['UserID'];
-$idType = $_POST['id_type'];
-$idNumber = $_POST['id_number'];
-$frontImage = file_get_contents($_FILES['front_image']['tmp_name']);
-$backImage = file_get_contents($_FILES['back_image']['tmp_name']);
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $userID = $_POST['user_id'];
+    $idType = $_POST['id_type'];
+    $idNumber = $_POST['id_number'];
+    $frontImage = file_get_contents($_FILES['front_image']['tmp_name']);
+    $backImage = file_get_contents($_FILES['back_image']['tmp_name']);
 
-// Insert ID data into the database
-$query = $conn->prepare("INSERT INTO UserValidID (UserID, ValidIDType, IDNumber, FrontIDImage, BackIDImage) VALUES (?, ?, ?, ?, ?)");
-$query->execute([$userID, $idType, $idNumber, $frontImage, $backImage]);
+    // Generate a unique ID
+    $uniqueID = uniqid("user_$userID" . "_id_");
+    $qrLink = "http://yourdomain.com/viewid.php?id=" . $uniqueID;
 
-// Get the ID for the link generation
-$lastID = $conn->lastInsertId();
-$uniqueLink = "viewid.php?id=" . urlencode(base64_encode($lastID));
+    // Insert into UserValidID table
+    $query = "INSERT INTO UserValidID (UserID, ValidIDType, IDNumber, FrontIDImage, BackIDImage, UniqueID, QRCodeLink)
+              VALUES (:userID, :idType, :idNumber, :frontImage, :backImage, :uniqueID, :qrLink)";
+    $stmt = $pdo->prepare($query);
+    $stmt->execute([
+        ':userID' => $userID,
+        ':idType' => $idType,
+        ':idNumber' => $idNumber,
+        ':frontImage' => $frontImage,
+        ':backImage' => $backImage,
+        ':uniqueID' => $uniqueID,
+        ':qrLink' => $qrLink
+    ]);
 
-// Redirect to QR generation
-header("Location: generateqr.php?link=" . urlencode($uniqueLink));
-exit;
+    // Generate QR Code and save it
+    $qrCodePath = "uploads/qrcodes/$uniqueID.png";
+    QRcode::png($qrLink, $qrCodePath, QR_ECLEVEL_L, 5);
+
+    echo "ID uploaded and QR code generated successfully.";
+}
 ?>
