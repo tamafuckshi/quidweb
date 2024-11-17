@@ -11,7 +11,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Generate a unique ID
     $uniqueID = uniqid("user_$userID" . "_id_");
-    $qrLink = "http://yourdomain.com/viewid.php?id=" . $uniqueID;
+    $uniqueLink = "https://quidweb.onrender.com/viewid.php?id=" . $uniqueID;
+
 
     // Insert into UserValidID table
     $query = "INSERT INTO UserValidID (UserID, ValidIDType, IDNumber, FrontIDImage, BackIDImage, UniqueID, QRCodeLink)
