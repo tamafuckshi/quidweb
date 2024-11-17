@@ -8,7 +8,7 @@ RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql
 
 # Optionally, copy a custom php.ini configuration if needed
-COPY ./php.ini /usr/local/etc/php/
+#COPY ./php.ini /usr/local/etc/php/
 
 # Set the working directory inside the container
 WORKDIR /var/www/html
